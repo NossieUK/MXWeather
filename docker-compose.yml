@@ -1,21 +1,24 @@
   MXWeather:
-    container_image: MXWeather
-    image: ubuntu:MXWeather
-    restart: ${RESTARTMODE}
+    container_name: MXWeather
+    image: nossieuk/mxweather
+    restart: unless-stopped
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+      - PUID=1000
+      - PGID=1000
+# Adjust timezone to your own
+      - TZ=Europe/London
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - ${ROOT}/MXWeather/data:/opt/CumulusMX/data
-      - ${ROOT}/MXWeather/backup:/opt/CumulusMX/backup
-      - ${ROOT}/MXWeather/log:/var/log/nginx
-      - ${ROOT}/MXWeather/MXdiags:/opt/CumulusMX/MXdiags
-      - ${ROOT}/MXWeather/config:/opt/CumulusMX/config
-      - ${ROOT}/MXWeather/publicweb:/opt/CumulusMX/publicweb
-#     - /tmp/Easyweather.dat:/opt/CumulusMX/Easyweather.dat           # Required to allow for no USB device, and allows for injecting custom EasyWeather data
-#     - /tmp/Easyweatherplus.dat:/opt/CumulusMX/Easyweatherplus.dat   # Required to allow for no USB device, and allows for injecting custom EasyWeather data
+# If you wish to keep your data seperate, you can change for example ./volumes/MXWeather/data to /media/pi/USBdrive etc this means even if you wipe the container and reinstall your data is always safe.
+      - ./volumes/MXWeather/data:/opt/CumulusMX/data
+      - ./volumes/MXWeather/backup:/opt/CumulusMX/backup
+      - ./volumes/MXWeather/log:/var/log/nginx
+      - ./volumes/MXWeather/MXdiags:/opt/CumulusMX/MXdiags
+      - ./volumes/MXWeather/config:/opt/CumulusMX/config
+      - ./volumes/MXWeather/publicweb:/opt/CumulusMX/publicweb
+      - ./volumes/MXWeather/utils:/opt/CumulusMX/utils
+#      - ./volumes/MXWeather/tmp/Easyweather.dat:/opt/CumulusMX/Easyweather.dat           # Required to allow for no USB device, and allows for injecting custom EasyWeather data
+#      - ./volumes/MXWeather/tmp/Easyweatherplus.dat:/opt/CumulusMX/Easyweatherplus.dat   # Required to allow for no USB device, and allows for injecting custom EasyWeather data
     ports:
       - 8998:8998
       - 80:80
