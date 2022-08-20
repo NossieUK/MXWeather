@@ -12,7 +12,6 @@
 # If you wish to keep your data seperate, you can change for example ./volumes/MXWeather/data to /media/pi/USBdrive etc this means even if you wipe the container and reinstall your data is always safe.
       - ./volumes/MXWeather/data:/opt/CumulusMX/data
       - ./volumes/MXWeather/backup:/opt/CumulusMX/backup
-      - ./volumes/MXWeather/log:/var/log/nginx
       - ./volumes/MXWeather/MXdiags:/opt/CumulusMX/MXdiags
       - ./volumes/MXWeather/config:/opt/CumulusMX/config
       - ./volumes/MXWeather/publicweb:/opt/CumulusMX/publicweb
